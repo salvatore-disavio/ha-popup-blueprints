@@ -1,7 +1,7 @@
 {
   "domain": "popup_blueprint_sync",
-  "name": "Popup Blueprint Sync",
-  "version": "1.0.0",
+  "name": "Popup Blueprints (Browser Mod)",
+  "version": "3.0.0",
   "documentation": "https://github.com/salvatore-disavio/TUO_REPO",
   "issue_tracker": "https://github.com/salvatore-disavio/TUO_REPO/issues",
   "codeowners": ["@salvatore-disavio"],
