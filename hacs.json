@@ -1,6 +1,5 @@
 {
   "name": "Popup Blueprints (Browser Mod)",
   "content_in_root": false,
-  "render_readme": true,
-  "domains": ["popup_blueprint_sync"]
+  "render_readme": true
 }
