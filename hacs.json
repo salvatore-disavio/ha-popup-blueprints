@@ -1,6 +1,5 @@
 {
   "name": "HA Popup Blueprints",
-  "content_in_root": false,
-  "render_readme": true,
-  "zip_release": false
+  "content_in_root": true,
+  "render_readme": true
 }
