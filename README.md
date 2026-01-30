@@ -1,9 +1,11 @@
 # Popup Blueprints (Browser Mod)
-
 Blueprint riutilizzabile per Home Assistant che consente di mostrare **popup moderni in stile app** direttamente nelle dashboard tramite **Browser Mod**.
 Progettato principalmente per **tablet, wall panel e dashboard touch**, ma utilizzabile anche su desktop.
 Ideale per notifiche visive, conferme di azione e messaggi contestuali legati allo stato delle entità.
 
+<p align="center">
+  <img src="https://raw.githubusercontent.com/salvatore-disavio/ha-popup-blueprints/main/images/custom_card.png" width="300">
+</p>
 ---
 
 ## ✨ Features
@@ -128,6 +130,21 @@ After the restart, the blueprint will be available in:
 
 ---
 
+## 🎨 Preset grafici disponibili
+
+### Alert - Warning - Success - Custom
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/salvatore-disavio/ha-popup-blueprints/main/images/success_card.png" width="300">
+  <img src="https://raw.githubusercontent.com/salvatore-disavio/ha-popup-blueprints/main/images/warning_card.png" width="300">
+</p>
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/salvatore-disavio/ha-popup-blueprints/main/images/custom_card.png" width="300">
+  <img src="https://raw.githubusercontent.com/salvatore-disavio/ha-popup-blueprints/main/images/alert_card.png" width="300">
+</p>
+
+---
 ## 📦 Requisiti
 
 - Home Assistant
