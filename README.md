@@ -55,6 +55,8 @@ Ideale per notifiche visive, conferme di azione e messaggi contestuali legati al
 
 ### Installazione tramite HACS (consigliata)
 
+[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=salvatore-disavio&repository=salvatore-disavio%2Fha-popup-blueprints&category=integration)
+
 Il progetto viene distribuito come **custom integration HACS**.
 L’integrazione si occupa automaticamente di installare e aggiornare il blueprint.
 
@@ -75,6 +77,8 @@ Dopo il riavvio, il blueprint sarà disponibile in:
 
 This project is distributed as a **HACS custom integration**.
 The integration automatically installs and updates the blueprint.
+
+[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=salvatore-disavio&repository=salvatore-disavio%2Fha-popup-blueprints&category=integration)
 
 1. Open **HACS**
 2. Go to **Integrations**
