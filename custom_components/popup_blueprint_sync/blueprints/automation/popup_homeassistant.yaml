@@ -1,0 +1,349 @@
+# App-Style Popup Blueprint (Browser Mod)
+# Author: Salvatore Di Savio
+# Support: https://buymeacoffee.com/salvatore.disavio
+# V1.1.0
+
+blueprint:
+  name: "Popup stile App (Con Browser Mod)"
+  description: >
+    Popup stile app con Browser Mod. Target tramite browser_id.
+  domain: automation
+
+  input:
+    browser_id:
+      name: Browser ID (Browser Mod)
+      description: "Es: d28331853dc54ty4bbd199051bcdfba"
+      selector:
+        text: {}
+
+    trigger_entity:
+      name: Entità trigger
+      selector:
+        entity: {}
+
+    trigger_mode:
+      name: Modalità trigger
+      default: "to"
+      selector:
+        select:
+          options:
+            - to          # quando passa A
+            - from_to     # quando passa da X ad A
+            - to_or_to    # quando passa A oppure B
+
+    trigger_to_state:
+      name: Stato trigger (to:)
+      default: ""
+      selector:
+        text: {}
+
+    trigger_from_state:
+      name: Stato FROM (solo per from_to)
+      default: ""
+      selector:
+        text: {}
+
+    trigger_to_state_b:
+      name: Stato TO B (solo per to_or_to)
+      default: ""
+      selector:
+        text: {}
+
+    hold_seconds:
+      name: Controllo temporale (secondi)
+      description: >
+        Se > 0, il popup viene mostrato solo se l'entità resta nello stato target per X secondi.
+        Se = 0 il controllo è disattivato.
+      default: 0
+      selector:
+        number:
+          min: 0
+          max: 3600
+          step: 1
+          mode: box
+          unit_of_measurement: s
+
+    preset:
+      name: Preset colore
+      default: "custom"
+      selector:
+        select:
+          options:
+            - custom
+            - success
+            - warning
+            - alert
+
+    colore_custom:
+      name: Colore (solo se preset=custom)
+      default: "#6b5dd3"
+      selector:
+        text: {}
+
+    icona:
+      name: Icona (MDI)
+      default: "mdi:tumble-dryer"
+      selector:
+        text: {}
+
+    titolo:
+      name: Titolo
+      default: "Asciugatrice Finita!"
+      selector:
+        text: {}
+
+    descrizione:
+      name: Descrizione
+      default: ""
+      selector:
+        text: {}
+
+    sottotitolo_label:
+      name: Sottotitolo
+      description: Sottotitolo — opzionale
+      default: ""
+      selector:
+        text: {}
+
+    durata_testo:
+      name: Testo dopo sottotitolo
+      description: Testo dopo sottotitolo (in linea) — opzionale
+      default: ""
+      selector:
+        text: {}
+
+    sottotitolo_entita:
+      name: Entità dopo sottotitolo
+      description: Entità dopo sottotitolo (in linea) — opzionale
+      default: ""
+      selector:
+        entity: {}
+
+    dismissable:
+      name: Chiudi cliccando fuori
+      default: true
+      selector:
+        boolean: {}
+
+    button_text:
+      name: Testo bottone
+      description: Testo mostrato sul bottone di conferma
+      default: "✓ Ho capito!"
+      selector:
+        text: {}
+
+mode: single
+
+trigger:
+  - platform: state
+    entity_id: !input trigger_entity
+    id: t_to_a
+    to: !input trigger_to_state
+
+  - platform: state
+    entity_id: !input trigger_entity
+    id: t_from_to
+    from: !input trigger_from_state
+    to: !input trigger_to_state
+
+  - platform: state
+    entity_id: !input trigger_entity
+    id: t_to_b
+    to: !input trigger_to_state_b
+
+variables:
+  v_browser_id: !input browser_id
+  v_entity: !input trigger_entity
+
+  v_titolo: !input titolo
+  v_descrizione: !input descrizione
+  v_label: !input sottotitolo_label
+  v_durata_text: !input durata_testo
+  v_durata_entity: !input sottotitolo_entita
+  v_icona: !input icona
+  v_preset: !input preset
+  v_custom: !input colore_custom
+  v_dismissable: !input dismissable
+  v_mode: !input trigger_mode
+  v_from: !input trigger_from_state
+  v_to_a: !input trigger_to_state
+  v_to_b: !input trigger_to_state_b
+
+  v_hold: !input hold_seconds
+  v_hold_enabled: "{{ (v_hold | int(0)) > 0 }}"
+
+  v_button_text: !input button_text
+
+  v_durata_value: >-
+    {% if v_durata_entity is string and v_durata_entity|length > 0 %}
+      {{ states(v_durata_entity) }}
+    {% else %}
+      {{ v_durata_text }}
+    {% endif %}
+
+  v_expected_state: >-
+    {% if trigger.id == 't_to_b' %}
+      {{ v_to_b }}
+    {% else %}
+      {{ v_to_a }}
+    {% endif %}
+
+  v_colore: >-
+    {% if v_preset == 'success' %} #37d05a
+    {% elif v_preset == 'warning' %} #f59e0b
+    {% elif v_preset == 'alert' %} #ef4444
+    {% else %} {{ v_custom }}
+    {% endif %}
+
+  v_btn1: >-
+    {% if v_preset == 'success' %} #22c55e
+    {% elif v_preset == 'warning' %} #f59e0b
+    {% elif v_preset == 'alert' %} #ef4444
+    {% else %} #6b5dd3
+    {% endif %}
+
+  v_btn2: >-
+    {% if v_preset == 'success' %} #86efac
+    {% elif v_preset == 'warning' %} #fbbf24
+    {% elif v_preset == 'alert' %} #fb7185
+    {% else %} #8b7ce8
+    {% endif %}
+
+condition:
+  - condition: template
+    value_template: >
+      {% set tid = trigger.id %}
+      {% if v_mode == 'to' %}
+        {{ tid == 't_to_a' }}
+      {% elif v_mode == 'from_to' %}
+        {{ tid == 't_from_to' and (v_from|length > 0) }}
+      {% elif v_mode == 'to_or_to' %}
+        {{ (tid == 't_to_a' and (v_to_a|length > 0)) or (tid == 't_to_b' and (v_to_b|length > 0)) }}
+      {% else %}
+        false
+      {% endif %}
+
+action:
+
+  - choose:
+      - conditions:
+          - condition: template
+            value_template: "{{ v_hold_enabled }}"
+        sequence:
+          - variables:
+              v_expected_state_runtime: "{{ trigger.to_state.state }}"
+          - wait_for_trigger:
+              - platform: template
+                value_template: "{{ states(v_entity) != v_expected_state_runtime }}"
+            timeout:
+              seconds: "{{ v_hold | int(0) }}"
+            continue_on_timeout: true
+          - choose:
+              - conditions:
+                  - condition: template
+                    value_template: "{{ wait.trigger is not none }}"
+                sequence:
+                  - stop: "Annullato: stato cambiato prima del tempo minimo"
+    default: []
+
+  - service: browser_mod.popup
+    data:
+      title: " "
+      size: normal
+      dismissable: "{{ v_dismissable }}"
+      browser_id:
+        - "{{ v_browser_id | trim }}"
+
+      style: |
+        ha-dialog .header,
+        ha-dialog header {
+          height: 0 !important;
+          min-height: 0 !important;
+          padding: 0 !important;
+          margin: 0 !important;
+          opacity: 0 !important;
+          overflow: hidden !important;
+        }
+
+        ha-dialog .mdc-dialog,
+        ha-dialog .mdc-dialog__container {
+          align-items: flex-start !important;
+        }
+
+        ha-dialog .mdc-dialog__surface {
+          animation: shs_in 280ms cubic-bezier(.2,.9,.2,1) both !important;
+        }
+
+        @keyframes shs_in {
+          from { opacity: 0; transform: translateY(18px) scale(0.99); }
+          to   { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+      content:
+        type: custom:button-card
+        name: "{{ v_titolo }}"
+        icon: "{{ v_icona }}"
+        show_state: false
+
+        tap_action:
+          action: fire-dom-event
+          browser_mod:
+            service: browser_mod.close_popup
+
+        styles:
+          card:
+            - background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%)
+            - border-radius: 25px
+            - padding: 40px 20px
+            - box-shadow: none
+          grid:
+            - grid-template-areas: '"i" "n" "info" "button"'
+            - grid-template-rows: 100px auto auto 60px
+          icon:
+            - width: 100px
+            - height: 100px
+            - border: 4px solid "{{ v_colore }}"
+            - border-radius: 50%
+            - background: white
+            - color: "{{ v_colore }}"
+            - animation: shs_pulse 1.05s ease-in-out infinite
+          name:
+            - font-size: 34px
+            - font-weight: 700
+            - color: "#1a1a1a"
+            - margin-top: 25px
+            - margin-bottom: 6px
+
+        extra_styles: |
+          @keyframes shs_pulse {
+            0%   { transform: scale(1); opacity: 1; }
+            50%  { transform: scale(1.12); opacity: .78; }
+            100% { transform: scale(1); opacity: 1; }
+          }
+
+        custom_fields:
+          info: |
+            <div style="text-align: center; margin: 10px 0 0;">
+              <div style="font-size: 18px; color: #666; margin-bottom: 8px;">
+                {{ v_label }} <strong>{{ v_durata_value }}</strong>
+              </div>
+              <div style="font-size: 18px; color: #555;">
+                {{ v_descrizione }}
+              </div>
+            </div>
+
+          button: |
+            <button style="
+              background: linear-gradient(135deg, {{ v_btn1 }} 0%, {{ v_btn2 }} 100%);
+              color: white;
+              border: none;
+              border-radius: 30px;
+              padding: 16px 50px;
+              font-size: 20px;
+              font-weight: 600;
+              cursor: pointer;
+              box-shadow: 0 6px 20px rgba(0,0,0,0.18);
+              width: 90%;
+              margin: 20px auto 0;
+              display: block;
+            ">{{ v_button_text }}</button>
