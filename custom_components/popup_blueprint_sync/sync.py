@@ -1,9 +1,13 @@
 from __future__ import annotations
 
 import hashlib
+import logging
 from pathlib import Path
 
 from homeassistant.core import HomeAssistant
+
+_LOGGER = logging.getLogger(__name__)
+
 
 NAMESPACE = "popup_blueprint_homeassistant"
 BLUEPRINT_FILENAME = "popup_homeassistant.yaml"
@@ -38,6 +42,7 @@ async def sync_blueprints(hass: HomeAssistant) -> bool:
     )
 
     if not source_path.exists():
+        _LOGGER.warning("Blueprint sorgente non trovato: %s", source_path)
         return False
 
     # Destination path where HA reads blueprints
