@@ -16,22 +16,15 @@ def _sha256(path: Path) -> str:
     return h.hexdigest()
 
 
-async def sync_blueprints(hass: HomeAssistant) -> bool:
-    """Copy/update blueprint from this integration folder to HA config blueprint folder.
-
-    Returns True if something changed.
-    """
-    # DEST: dove HA legge i blueprint
+async def sync_blueprint(hass: HomeAssistant) -> bool:
     dest_dir = Path(hass.config.path("blueprints", "automation", DOMAIN))
     dest_dir.mkdir(parents=True, exist_ok=True)
     dest_path = dest_dir / BLUEPRINT_FILENAME
 
-    # SRC: relativo alla cartella del componente (robusto su qualsiasi install)
     integration_dir = Path(__file__).parent
     source_path = integration_dir / "blueprints" / "automation" / BLUEPRINT_FILENAME
 
     if not source_path.exists():
-
         return False
 
     if dest_path.exists() and _sha256(dest_path) == _sha256(source_path):
@@ -40,5 +33,4 @@ async def sync_blueprints(hass: HomeAssistant) -> bool:
     tmp_path = dest_path.with_suffix(".yaml.tmp")
     tmp_path.write_bytes(source_path.read_bytes())
     tmp_path.replace(dest_path)
-
     return True
