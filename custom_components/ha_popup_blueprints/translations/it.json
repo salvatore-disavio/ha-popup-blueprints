@@ -3,7 +3,7 @@
     "step": {
       "user": {
         "title": "HA Popup Blueprints",
-        "description": "Questa integrazione installa/aggiorna i file blueprint nella configurazione di Home Assistant così da renderli visibili nella sezione Blueprint."
+        "description": "Installa/aggiorna il blueprint nella configurazione di Home Assistant così da renderlo visibile nella sezione Blueprint."
       }
     },
     "abort": {
