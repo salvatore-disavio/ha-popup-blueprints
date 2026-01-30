@@ -3,7 +3,7 @@
 # Support: https://buymeacoffee.com/salvatore.disavio
 
 blueprint:
-  name: "Popup stile App (Con Browser Mod)"
+  name: "Popup Browser Mod [salvatore-disavio]"
   description: >
     Popup stile app con Browser Mod. Target tramite browser_id.
   domain: automation
