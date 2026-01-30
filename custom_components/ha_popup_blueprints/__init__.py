@@ -1,33 +1,35 @@
 from __future__ import annotations
 
 import logging
-from pathlib import Path
-import shutil
 
+from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
+
+from .const import DOMAIN
+from .sync import sync_blueprints
 
 _LOGGER = logging.getLogger(__name__)
 
-DOMAIN = "ha_popup_blueprints"
-
-_BP_RELATIVE_PATH = Path("blueprints") / "automation" / "popup_homeassistant.yaml"
 
 async def async_setup(hass: HomeAssistant, config: dict) -> bool:
-    """Set up the wrapper integration and ensure the blueprint is available under /config/blueprints."""
-    src = Path(__file__).parent / _BP_RELATIVE_PATH
-    dst_dir = Path(hass.config.path("blueprints", "automation", DOMAIN))
-    dst = dst_dir / "popup_homeassistant.yaml"
+    """Set up integration from YAML (not used, but required by HA)."""
+    return True
 
+
+async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
+    """Set up integration from a config entry (UI)."""
     try:
-        dst_dir.mkdir(parents=True, exist_ok=True)
-
-        # Copia/overwrite: così ad ogni update HACS ti aggiorna anche il blueprint visibile in UI
-        shutil.copyfile(src, dst)
-        _LOGGER.info("Installed/updated blueprint to %s", dst)
-
+        changed = await sync_blueprints(hass)
+        if changed:
+            _LOGGER.info("Blueprint synced/updated to /config/blueprints/automation/%s", DOMAIN)
+        else:
+            _LOGGER.debug("Blueprint already up to date")
     except Exception as err:
-        _LOGGER.error("Failed to install blueprint: %s", err)
-        # Non blocchiamo l'integrazione: è solo un wrapper
-        return True
+        _LOGGER.exception("Blueprint sync failed: %s", err)
 
+    return True
+
+
+async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
+    """Unload the config entry."""
     return True
