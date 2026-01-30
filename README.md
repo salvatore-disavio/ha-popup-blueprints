@@ -66,6 +66,7 @@ L’integrazione si occupa automaticamente di installare e aggiornare il bluepri
 4. Inserisci la repository: https://github.com/salvatore-disavio/ha-popup-blueprints
 5. Categoria: **Integration**
 6. Installa e **riavvia Home Assistant**
+7. in **impostazioni -> dispositivi e servizi -> aggiungi integrazione -> cerca ed aggiungi "popup blueprints"
 
 Dopo il riavvio, il blueprint sarà disponibile in:
 **Impostazioni → Automazioni e scene → Blueprint**
@@ -89,6 +90,7 @@ The integration automatically installs and updates the blueprint.
   ```
 5. Category: **Integration**
 6. Install and **restart Home Assistant**
+7. in **impostazioni -> dispositivi e servizi -> aggiungi integrazione -> cerca ed aggiungi "popup blueprints"
 
 After the restart, the blueprint will be available in:
 **Settings → Automations & Scenes → Blueprints**
