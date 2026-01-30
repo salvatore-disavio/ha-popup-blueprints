@@ -1,5 +1,6 @@
 {
-  "name": "Popup Blueprint (Browser Mod)",
+  "name": "HA Popup Blueprints",
+  "content_in_root": false,
   "render_readme": true,
-  "category": "template"
+  "zip_release": false
 }
