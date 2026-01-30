@@ -1,0 +1,13 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "HA Popup Blueprints",
+        "description": "This integration installs/updates the blueprint files into your Home Assistant configuration so they appear in the Blueprint UI."
+      }
+    },
+    "abort": {
+      "already_configured": "Already configured."
+    }
+  }
+}
