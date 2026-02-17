@@ -9,7 +9,7 @@ from homeassistant.core import HomeAssistant
 _LOGGER = logging.getLogger(__name__)
 
 
-NAMESPACE = "popup_blueprint_homeassistant"
+NAMESPACE = "popup_blueprints_salvatoredisavio"
 BLUEPRINT_FILENAME = "popup_homeassistant.yaml"
 
 
