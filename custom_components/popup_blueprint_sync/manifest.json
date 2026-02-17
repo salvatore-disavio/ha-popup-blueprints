@@ -1,11 +1,10 @@
 {
   "domain": "popup_blueprint_sync",
-  "name": "Popup Blueprints (Browser Mod)",
+  "name": "Popup Blueprints Sync",
   "version": "4.0.0",
-  "documentation": "https://github.com/Salvatore-disavio/ha-popup-blueprints",
-  "issue_tracker": "https://github.com/Salvatore-disavio/ha-popup-blueprints/issues",
-  "codeowners": ["@Salvatore-disavio"],
+  "documentation": "https://github.com/salvatore-disavio/ha-popup-blueprints",
+  "issue_tracker": "https://github.com/salvatore-disavio/ha-popup-blueprints/issues",
+  "codeowners": ["@salvatore-disavio"],
   "requirements": [],
-  "config_flow": true,
   "iot_class": "local_push"
 }
