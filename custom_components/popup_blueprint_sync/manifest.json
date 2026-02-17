@@ -1,7 +1,7 @@
 {
-  "domain": "popup_blueprint_sync",
-  "name": "Popup Blueprint Sync",
-  "version": "4.1.0",
+  "domain": "popup_blueprints",
+  "name": "Popup Blueprint",
+  "version": "4.2.0",
   "documentation": "https://github.com/salvatore-disavio/ha-popup-blueprints",
   "issue_tracker": "https://github.com/salvatore-disavio/ha-popup-blueprints/issues",
   "codeowners": ["@salvatore-disavio"],
