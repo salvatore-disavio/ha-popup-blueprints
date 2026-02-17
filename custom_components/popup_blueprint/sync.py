@@ -33,7 +33,7 @@ async def sync_blueprints(hass: HomeAssistant) -> bool:
     config_dir = Path(hass.config.config_dir)
 
     # Source file inside the integration folder (downloaded by HACS)
-    integration_dir = config_dir / "custom_components" / "popup_blueprint_sync"
+    integration_dir = config_dir / "custom_components" / "popup_blueprints"
     source_path = (
         integration_dir
         / "blueprints"
